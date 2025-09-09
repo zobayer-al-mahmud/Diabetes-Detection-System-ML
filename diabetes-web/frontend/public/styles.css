@@ -1,0 +1,309 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #36223b, #2b3351, #0e3b5a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Glass card styling */
+.glass-card {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+/* Title styling */
+.title {
+    color: white;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 32px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    padding-right: 60px; /* Make room for unit */
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.unit {
+    position: absolute;
+    right: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: rgba(100, 149, 237, 0.6);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.1);
+}
+
+.input-group input:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Predict button styling */
+.predict-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 12px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+}
+
+.predict-btn:hover {
+    background: linear-gradient(135deg, #5b52f0, #8b46ff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+}
+
+.predict-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+}
+
+.predict-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Results styling */
+.results {
+    margin-top: 24px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    text-align: center;
+    animation: slideIn 0.5s ease-out;
+}
+
+.result-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.risk-percentage {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.prediction-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.prediction-label.positive {
+    color: #ff6b6b;
+}
+
+.prediction-label.negative {
+    color: #51cf66;
+}
+
+.best-model-info {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+/* Loading spinner */
+.loading {
+    margin-top: 24px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 16px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid #4f46e5;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error styling */
+.error {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 14px;
+}
+
+/* Utility classes */
+.hidden {
+    display: none;
+}
+
+/* Footer disclaimer */
+.disclaimer {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .container {
+        max-width: 100%;
+        padding: 0 16px;
+    }
+    
+    .glass-card {
+        padding: 24px;
+    }
+    
+    .title {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+    
+    .input-group input {
+        padding: 12px 14px;
+        padding-right: 55px; /* Adjust for unit on mobile */
+        font-size: 16px;
+    }
+    
+    .unit {
+        right: 14px;
+        font-size: 13px;
+    }
+    
+    .predict-btn {
+        padding: 14px;
+        font-size: 16px;
+    }
+}
+
+/* Focus management for accessibility */
+.input-group input:focus-visible {
+    outline: 2px solid rgba(100, 149, 237, 0.8);
+    outline-offset: 2px;
+}
+
+.predict-btn:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}

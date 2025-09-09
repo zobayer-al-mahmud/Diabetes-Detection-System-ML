@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <h1 class="title">Diabetes Predictor</h1>
+            
+            <form id="predictionForm">
+                <div class="input-group">
+                    <label for="glucose">Glucose</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="glucose" name="glucose" placeholder="Enter glucose level" min="0" step="any">
+                        <span class="unit">mg/dL</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="insulin">Insulin</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="insulin" name="insulin" placeholder="Enter insulin level" min="0" step="any">
+                        <span class="unit">μU/mL</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="bmi">BMI</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="bmi" name="bmi" placeholder="Enter BMI" min="0" step="any">
+                        <span class="unit">kg/m²</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="age">Age</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="age" name="age" placeholder="Enter age" min="0" step="1">
+                        <span class="unit">years</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="predict-btn">Predict</button>
+            </form>
+            
+            <div id="results" class="results hidden">
+                <div class="result-content">
+                    <div class="risk-percentage"></div>
+                    <div class="prediction-label"></div>
+                    <div class="best-model-info"></div>
+                </div>
+            </div>
+            
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Analyzing...</p>
+            </div>
+            
+            <div id="error" class="error hidden">
+                <p class="error-message"></p>
+            </div>
+        </div>
+        
+        <footer class="disclaimer">
+            Educational demo only — not medical advice.
+        </footer>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
