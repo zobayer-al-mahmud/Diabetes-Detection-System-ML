@@ -10,8 +10,8 @@ services:
     runtime: docker
     region: oregon
     plan: free
+    rootDir: backend
     dockerfilePath: Dockerfile.backend
-    dockerContext: backend
     autoDeploy: true
     healthCheckPath: /health
     envVars:
@@ -30,8 +30,8 @@ services:
     runtime: docker
     region: oregon
     plan: free
+    rootDir: frontend
     dockerfilePath: Dockerfile.frontend
-    dockerContext: frontend
     autoDeploy: true
     envVars:
       # Automatically inject backend public URL into frontend container
