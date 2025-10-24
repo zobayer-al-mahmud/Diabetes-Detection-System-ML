@@ -41,10 +41,5 @@ Thumbs.db
 README.md
 *.md
 
-# Docker
-docker-compose.yml
-Dockerfile
-.dockerignore
-
 # Other
 *.csv
