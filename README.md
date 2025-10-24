@@ -1,20 +1,25 @@
 # Diabetes Prediction Web App
 
-A full-stack web application for diabetes risk prediction using machine learning. The app features a glass morphism UI design and automatically selects the best performing model from multiple trained algorithms.
+A full-stack web application for diabetes risk prediction using machine learning. The app features a glass morphism UI design, Redis caching, and is production-ready with Docker support.
 
 ![Diabetes Predictor](https://img.shields.io/badge/Status-Production%20Ready-green)
-![Python](https://img.shields.io/badge/Python-3.8+-blue)
+![Python](https://img.shields.io/badge/Python-3.11+-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green)
-![Frontend](https://img.shields.io/badge/Frontend-Vanilla%20JS-yellow)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED)
+![Redis](https://img.shields.io/badge/Redis-Cache-DC382D)
 
 ## 🎯 Features
 
 - **Machine Learning Pipeline**: Trains and evaluates 4 different models (Logistic Regression, KNN, Decision Tree, Random Forest)
 - **Automatic Model Selection**: Chooses the best model based on accuracy with intelligent tie-breaking
+- **Redis Caching**: Fast predictions with 24-hour cache, metrics cached for 1 hour
+- **Docker Support**: Multi-stage Dockerfile and Docker Compose for easy deployment
+- **Render Ready**: One-click deployment to Render with free tier support
 - **Glass Morphism UI**: Modern, responsive design with purple-to-blue gradient background
 - **Real-time Predictions**: Fast API responses with probability scores and risk labels
 - **Data Preprocessing**: Handles missing values with median imputation
 - **Comprehensive Metrics**: Confusion Matrix, Precision, Recall, F1-Score for all models
+- **Production Grade**: Gunicorn + Uvicorn ASGI server, health checks, logging
 
 ## 📁 Project Structure
 
@@ -44,20 +49,48 @@ diabetes-web/
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: Docker Compose (Recommended)
 
-- Python 3.8 or higher
+The fastest way to get started with all services:
+
+```bash
+# Start the application and Redis
+docker-compose up -d
+
+# Check status
+docker-compose ps
+
+# View logs
+docker-compose logs -f app
+
+# Access the API at http://localhost:8000
+```
+
+### Option 2: Local Development
+
+#### Prerequisites
+
+- Python 3.11 or higher
 - pip (Python package manager)
+- Redis (optional, for caching)
 
-### Backend Setup
+#### Backend Setup
 
 1. **Install Dependencies**
    ```bash
-   cd diabetes-web/backend
    pip install -r requirements.txt
    ```
 
-2. **Train Models**
+2. **Start Redis (Optional)**
+   ```bash
+   # Use Docker
+   docker run -d -p 6379:6379 redis:7-alpine
+   
+   # Or install Redis locally and run
+   redis-server
+   ```
+
+3. **Train Models**
    ```bash
    python train_export.py
    ```
@@ -68,27 +101,86 @@ diabetes-web/
    - Automatically select the best model by accuracy
    - Save all models and metadata
 
-3. **Start API Server**
+4. **Start API Server**
    ```bash
+   # Development
    uvicorn server:app --reload --port 8000
+   
+   # Production
+   gunicorn server:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
    ```
    Server will be available at: `http://localhost:8000`
 
-### Frontend Setup
+### Option 3: Deploy to Render
 
-1. **Navigate to Frontend**
-   ```bash
-   cd diabetes-web/frontend/public
-   ```
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment instructions.
 
-2. **Start Development Server**
+**Quick Deploy**:
+1. Push code to GitHub
+2. Connect repository to Render
+3. Render detects `render.yaml` and deploys automatically
+4. Free tier includes Redis cache!
+
+## 🐳 Docker Commands
+
+### Build and Run
+```bash
+# Build image
+docker build -t diabetes-prediction .
+
+# Run with docker-compose
+docker-compose up -d
+
+# View logs
+docker-compose logs -f app
+
+# Stop services
+docker-compose down
+```
+
+### Testing
+```bash
+# Health check
+curl http://localhost:8000/health
+
+# Make prediction
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"Glucose": 120, "BMI": 31.6, "Age": 45, "Insulin": 130}'
+```
+
+## 💾 Redis Caching
+
+The application uses Redis for performance optimization:
+
+- **Prediction Cache**: 24-hour TTL for identical predictions
+- **Metrics Cache**: 1-hour TTL for model metrics
+- **Graceful Fallback**: Works without Redis if unavailable
+- **Cache Hit Indicator**: Response includes `"cached": true/false`
+
+Check cache status:
+```bash
+curl http://localhost:8000/
+# Returns: "cache_enabled": true/false
+```
+
+## 📖 Frontend Setup
+
+The frontend is a standalone HTML/CSS/JS application:
+
+1. **Open in Browser**
    ```bash
+   # Simple HTTP server
    python -m http.server 5500
+   
+   # Or just open index.html in browser
    ```
-   Frontend will be available at: `http://localhost:5500`
 
-3. **Open in Browser**
-   Visit `http://localhost:5500` to use the application
+2. **Update API URL** (if needed)
+   Edit `app.js` and change:
+   ```javascript
+   const API_BASE_URL = 'http://localhost:8000';
+   ```
 
 ## 🔧 API Documentation
 
@@ -154,9 +246,14 @@ Make a diabetes prediction.
 {
   "best_model": "Random Forest",
   "prob": 0.82,
-  "label": "Positive"
+  "label": "Positive",
+  "cached": false
 }
 ```
+
+### API Documentation (Interactive)
+
+Visit `http://localhost:8000/docs` for interactive Swagger UI documentation.
 
 ## 🧠 Machine Learning Details
 
@@ -289,7 +386,35 @@ The diabetes dataset contains 768 samples with the following features:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## � Deployment
+
+### Render (Recommended)
+
+This project is optimized for Render deployment with free tier support:
+
+1. **Push to GitHub**
+2. **Connect to Render** and select your repository
+3. **Render auto-detects** `render.yaml` configuration
+4. **Two services deploy**:
+   - Web Service (FastAPI app)
+   - Redis Cache (free 25MB)
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions.
+
+### Other Platforms
+
+- **Railway**: Use `Dockerfile` for deployment
+- **Heroku**: Add `Procfile` (not included)
+- **AWS/GCP/Azure**: Use Docker container
+- **DigitalOcean**: App Platform with Dockerfile
+
+### Environment Variables
+
+Required for deployment:
+- `REDIS_URL`: Redis connection string (auto-configured on Render)
+- `PORT`: Application port (auto-configured on most platforms)
+
+## �📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
@@ -297,10 +422,18 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 If you encounter any issues or have questions:
 
-1. Check the console for error messages
-2. Verify all dependencies are installed correctly
-3. Ensure both backend and frontend servers are running
-4. Check that the model files were generated successfully
+1. Check [DEPLOYMENT.md](DEPLOYMENT.md) for deployment troubleshooting
+2. Review Docker logs: `docker-compose logs -f app`
+3. Verify all dependencies are installed correctly
+4. Check that Redis is running if caching is enabled
+5. Ensure model files were generated successfully
+6. Open an issue on GitHub
+
+## 📚 Documentation
+
+- **[DEPLOYMENT.md](DEPLOYMENT.md)**: Complete deployment guide for Docker and Render
+- **API Docs**: `http://localhost:8000/docs` (Swagger UI)
+- **Redis Guide**: See caching section in DEPLOYMENT.md
 
 ---
 
