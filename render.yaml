@@ -10,9 +10,8 @@ services:
     env: docker
     region: oregon
     plan: free
-    rootDir: backend
-    dockerfilePath: ./Dockerfile
-    dockerContext: ./
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
     envVars:
       - key: PORT
         value: 8000
@@ -32,9 +31,8 @@ services:
     env: docker
     region: oregon
     plan: free
-    rootDir: frontend
-    dockerfilePath: ./Dockerfile
-    dockerContext: ./
+    dockerfilePath: frontend/Dockerfile
+    dockerContext: frontend
     envVars:
       - key: API_BASE_URL
         fromService:
