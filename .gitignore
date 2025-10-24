@@ -1,0 +1,78 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+myenv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.log
+
+# Docker
+.dockerignore
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Redis
+*.rdb
+dump.rdb
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Model files (optional - uncomment if you want to track trained models)
+# model/*.pkl
+
+# Data (optional - uncomment if you don't want to track data)
+# data/*.csv

@@ -1,0 +1,45 @@
+# ============================================
+# Render Blueprint Configuration
+# Deploys Full-Stack Monorepo with Docker
+# ============================================
+
+services:
+  # Backend Service (FastAPI)
+  - type: web
+    name: diabetes-backend
+    env: docker
+    region: oregon
+    plan: free
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: diabetes-frontend
+          envVarKey: RENDER_EXTERNAL_URL
+    healthCheckPath: /health
+    autoDeploy: true
+
+  # Frontend Service (React + Vite + Nginx)
+  - type: web
+    name: diabetes-frontend
+    env: docker
+    region: oregon
+    plan: free
+    rootDir: frontend
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    envVars:
+      - key: API_BASE_URL
+        fromService:
+          type: web
+          name: diabetes-backend
+          envVarKey: RENDER_EXTERNAL_URL
+    healthCheckPath: /health
+    autoDeploy: true

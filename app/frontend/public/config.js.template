@@ -1,0 +1,7 @@
+// ============================================
+// Runtime Configuration Template
+// This file is replaced at container startup with actual values
+// ============================================
+window.ENV_CONFIG = {
+  API_BASE_URL: '${API_BASE_URL}'
+};

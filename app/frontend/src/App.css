@@ -1,0 +1,198 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 3rem;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-left: 0.25rem;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  padding-right: 70px;
+  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: rgba(138, 43, 226, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.input-wrapper input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.unit {
+  position: absolute;
+  right: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.predict-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: white;
+  background: linear-gradient(135deg, #8a2be2 0%, #4b0082 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.predict-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(138, 43, 226, 0.5);
+}
+
+.predict-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background: rgba(255, 69, 58, 0.15);
+  border: 1px solid rgba(255, 69, 58, 0.4);
+  padding: 1rem;
+  border-radius: 12px;
+  color: #ff6b6b;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.result {
+  background: rgba(0, 255, 127, 0.08);
+  border: 1px solid rgba(0, 255, 127, 0.3);
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
+
+.risk-title {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.prediction-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.prediction-text .positive {
+  color: #ff6b6b;
+  font-weight: 600;
+}
+
+.prediction-text .negative {
+  color: #00ff7f;
+  font-weight: 600;
+}
+
+.model-info {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.disclaimer {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+}
+
+.footer {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 2rem 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .form {
+    gap: 1.25rem;
+  }
+}
