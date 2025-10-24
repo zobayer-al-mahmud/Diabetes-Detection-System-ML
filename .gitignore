@@ -1,9 +1,12 @@
-# Python
+# Ignore Python cache
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+env/
+venv/
+ENV/
 build/
 develop-eggs/
 dist/
@@ -19,60 +22,31 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
 
-# Virtual environments
-myenv/
-venv/
-env/
-ENV/
-env.bak/
-venv.bak/
-.venv
+# Ignore Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+.cache/
 
-# IDEs
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-.project
-.pydevproject
-.settings/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-*.ipynb
 
 # OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
-*.log
 
-# Docker
-.dockerignore
-
-# Environment variables
+# Environment
 .env
 .env.local
 .env.*.local
 
-# Redis
-*.rdb
-dump.rdb
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Model files (optional - uncomment if you want to track trained models)
-# model/*.pkl
-
-# Data (optional - uncomment if you don't want to track data)
-# data/*.csv
+# Logs
+logs/
+*.log
