@@ -11,7 +11,7 @@ services:
     region: oregon
     plan: free
     rootDir: backend
-    dockerfilePath: Dockerfile
+    dockerfilePath: Dockerfile.backend
     autoDeploy: true
     healthCheckPath: /health
     envVars:
@@ -31,7 +31,7 @@ services:
     region: oregon
     plan: free
     rootDir: frontend
-    dockerfilePath: Dockerfile
+    dockerfilePath: Dockerfile.frontend
     autoDeploy: true
     envVars:
       # Automatically inject backend public URL into frontend container
