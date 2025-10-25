@@ -1,3 +1,4 @@
+**Live Link** : https://diabetes-detection-system-frontend.onrender.com/
 # 🏥 Diabetes Detection System
 
 A full-stack web application for predicting diabetes risk using machine learning. Built with FastAPI backend and React frontend, deployed on Render using Docker containers.
@@ -463,10 +464,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Zobayer Al Mahmud**
-
-- GitHub: [@zobayer-al-mahmud](https://github.com/zobayer-al-mahmud)
-- LinkedIn: [Zobayer Al Mahmud](https://linkedin.com/in/zobayer-al-mahmud)
-- Email: zobayer.mahmud@example.com
+- LinkedIn: www.linkedin.com/in/zobayer-al-mahmud-652170352
+- Email: zobayeralmahmud0@gmail.com
 
 ---
 
