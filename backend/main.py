@@ -1,6 +1,6 @@
 """
 FastAPI Backend with CORS Configuration
-Supports dynamic frontend origin from environment variable
+Supports dynamic frontend origin from environment variable (Render-ready)
 """
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,19 +8,24 @@ from pydantic import BaseModel
 from typing import Optional
 import os
 
-app = FastAPI(title="Monorepo Backend API")
+# ============================================
+# FastAPI App Initialization
+# ============================================
+app = FastAPI(title="Diabetes Detection Backend API")
 
 # ============================================
-# CORS Configuration for Frontend
+# Dynamic Frontend CORS Configuration
 # ============================================
-# Get frontend URL from environment (set by Render)
+# Render injects FRONTEND_URL automatically from render.yaml
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
-# Allow the frontend to make requests
+# Allow multiple origins for dev and production
 origins = [
     FRONTEND_URL,
-    "http://localhost:5173",  # Local Vite dev server
-    "http://localhost:3000",  # Alternative local port
+    "http://localhost:5173",  # local dev
+    "http://localhost:3000",  # alt local dev
+    "http://localhost",  # local dev nginx
+    "https://diabetes-detection-system-frontend.onrender.com",  # Production frontend
 ]
 
 app.add_middleware(
@@ -31,9 +36,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # ============================================
-# Request/Response Models
+# Pydantic Models
 # ============================================
 class HealthResponse(BaseModel):
     status: str
@@ -57,11 +61,12 @@ class PredictionResponse(BaseModel):
 # ============================================
 # API Endpoints
 # ============================================
+
 @app.get("/")
 async def root():
-    """Root endpoint"""
+    """Root route"""
     return {
-        "message": "FastAPI Backend is running",
+        "message": "FastAPI backend is running 🚀",
         "docs": "/docs",
         "frontend_url": FRONTEND_URL
     }
@@ -69,10 +74,10 @@ async def root():
 
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
-    """Health check endpoint"""
+    """Health check endpoint for Render"""
     return {
         "status": "healthy",
-        "message": "Backend API is running",
+        "message": "Backend API is live",
         "frontend_url": FRONTEND_URL
     }
 
@@ -80,21 +85,21 @@ async def health_check():
 @app.post("/api/predict", response_model=PredictionResponse)
 async def predict(data: PredictionRequest):
     """
-    Diabetes risk prediction endpoint
-    Replace this with your actual ML model logic
+    Diabetes risk prediction (demo logic).
+    Replace this with your ML model inference.
     """
     try:
-        # Example calculation (replace with your actual model)
+        # Dummy weighted risk calculation
         risk_score = (
             (data.glucose * 0.3) +
             (data.insulin * 0.2) +
             (data.bmi * 0.3) +
             (data.age * 0.2)
         ) / 100
-        
+
         risk_percentage = min(risk_score * 10, 99.9)
         prediction = "High Risk" if risk_percentage > 50 else "Low Risk"
-        
+
         return {
             "prediction": prediction,
             "risk_percentage": round(risk_percentage, 2),
@@ -105,13 +110,14 @@ async def predict(data: PredictionRequest):
                 "age": data.age
             }
         }
+
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
 
 
 @app.get("/api/stats")
 async def get_stats():
-    """Get some statistics"""
+    """Mock statistics route"""
     return {
         "total_predictions": 1234,
         "average_risk": 45.6,
@@ -119,6 +125,10 @@ async def get_stats():
     }
 
 
+# ============================================
+# Local Development Entry Point
+# ============================================
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

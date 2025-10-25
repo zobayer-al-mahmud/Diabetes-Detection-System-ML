@@ -1,10 +1,10 @@
 # ============================================
 # Nginx Configuration Template
-# Replaces ${API_BASE_URL} at runtime with actual backend URL
+# Replaces ${PORT} and serves on Render's dynamic port
 # ============================================
 
 server {
-    listen 80;
+    listen ${PORT};
     server_name _;
     
     root /usr/share/nginx/html;
