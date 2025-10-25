@@ -2,7 +2,8 @@ import { useState } from 'react'
 import './App.css'
 
 // Get API URL from runtime config injected by Nginx
-const API_BASE_URL = window.ENV_CONFIG?.API_BASE_URL || 'http://localhost:8000';
+// Remove trailing slash to avoid double slashes in API calls
+const API_BASE_URL = (window.ENV_CONFIG?.API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
 
 function App() {
   const [formData, setFormData] = useState({
